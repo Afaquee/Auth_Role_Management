@@ -25,8 +25,25 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
+Route::group(['middleware' => ['auth'], 'prefix' => '/admin'], function() {
+    // Route::group(function () {
+    //     // Define routes here
+    //     Route::get('/users', UserController::class, 'index')->name('users.index');
+    // });
+    Route::group(['prefix' => '/users'], function () {
+        Route::get('/index', [UserController::class, 'index'])->name('users.index');
+
+        // Route::get('/create', 'UserController@create')->name('users.create');
+        // Route::post('/', 'UserController@store')->name('users.store');
+        // Route::get('/{id}', 'UserController@show')->name('users.show');
+        // Route::get('/{id}/edit', 'UserController@edit')->name('users.edit');
+        // Route::put('/{id}', 'UserController@update')->name('users.update');
+        // Route::delete('/{id}', 'UserController@destroy')->name('users.destroy');
+    });
+    
+    
+    // Route::resource('roles', RoleController::class);
+    // Route::resource('users', UserController::class);
+    // Route::resource('products', ProductController::class);
 });
+
